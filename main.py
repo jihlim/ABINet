@@ -133,7 +133,7 @@ def _get_learner(config, data, model, local_rank=None):
 
     if config.global_phase == 'train':
         num_replicas = 1 if local_rank is None else torch.distributed.get_world_size()
-        phases = _get_training_phases(config, len(learner.data.train_dl)//num_replicas)
+        phases = _get_training_phases(config, len(learner.data.train_dl)//num_replicas)         # len(learner.data.train_dl): number of batch
         learner.callback_fns += [
             partial(GeneralScheduler, phases=phases),
             partial(GradientClipping, clip=config.optimizer_clip_grad),

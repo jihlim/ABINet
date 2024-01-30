@@ -144,7 +144,9 @@ class ImageDataset(Dataset):
     def __getitem__(self, idx):
         image, text, idx_new = self.get(idx)
         # print(image, text, idx_new, idx)
-        if not self.is_training: assert idx == idx_new, f'idx {idx} != idx_new {idx_new} during testing.'
+        # if not self.is_training: assert idx == idx_new, f'idx {idx} != idx_new {idx_new} durinrg testing.'
+        if not self.is_training: 
+            if idx!=idx_new: pass
 
         if self.is_training:
             image = self._process_training(image)

@@ -34,7 +34,7 @@ class BCNLanguage(Model):
 
         self.cls = nn.Linear(d_model, self.charset.num_classes)
 
-        if config.model_language_checkpoint is not None:
+        if not (config.model_language_checkpoint is None or config.model_language_checkpoint == 'None'):
             logging.info(f'Read language model from {config.model_language_checkpoint}.')
             self.load(config.model_language_checkpoint)
 

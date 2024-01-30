@@ -45,8 +45,8 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True, map_size=50737
     for i, sample in tqdm(enumerate(datalist)):
         try:
             imagePath, label = sample.split('\t')
-            if len(label) < 51:
-                imagePath = os.path.join(inputPath, imagePath)
+            if len(label) < 55:
+                # imagePath = os.path.join(inputPath, imagePath)
 
                 # # only use alphanumeric data
                 # if re.search('[^a-zA-Z0-9]', label):
@@ -57,6 +57,7 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True, map_size=50737
                     continue
                 with open(imagePath, 'rb') as f:
                     imageBin = f.read()
+    
                 if checkValid:
                     try:
                         if not checkImageIsValid(imageBin):
@@ -88,11 +89,14 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True, map_size=50737
 
 if __name__ == '__main__':
     # createDataset(r'E:\text_recognize_data\syntext_word', r'E:\text_recognize_data\syntext_word\real_synth.txt', r'E:\text_recognize_data\syntext_word\lmdb')
-    createDataset(r'E:\text_recognize_data\syntext_line\synth', r'E:\text_recognize_data\syntext_line\synth\gt.txt',
-                  r'E:\text_recognize_data\syntext_line\lmdb', map_size=5073741824)
-    createDataset(r'E:\text_recognize_data\syntext_line\synth_test',
-                  r'E:\text_recognize_data\syntext_line\synth_test\gt.txt',
-                  r'E:\text_recognize_data\syntext_line\lmdb_val', map_size=1073741824)
+    # createDataset(r'E:\text_recognize_data\syntext_line\synth', r'E:\text_recognize_data\syntext_line\synth\gt.txt',
+    #               r'E:\text_recognize_data\syntext_line\lmdb', map_size=5073741824)
+    # createDataset(r'E:\text_recognize_data\syntext_line\synth_test',
+    #               r'E:\text_recognize_data\syntext_line\synth_test\gt.txt',
+    #               r'E:\text_recognize_data\syntext_line\lmdb_val', map_size=1073741824)
+    createDataset(r'/purestorage/datasets/OCR/data/idcard/textrecog/train',
+                  r'/purestorage/datasets/OCR/data/idcard/rec_gt_val.txt',
+                  r'/purestorage/project/jihlim/ocr/ABINet/data/idcard_val', map_size=3000000000)
 
     # createDataset(r'E:\text_recognize_data\syntext_word\synth_test',
     #               r'E:\text_recognize_data\syntext_word\synth_test\gt.txt',

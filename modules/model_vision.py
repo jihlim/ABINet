@@ -32,8 +32,8 @@ class BaseVision(Model):
         else:
             raise Exception(f'{config.model_vision_attention} is not valid.')
         self.cls = nn.Linear(self.out_channels, self.charset.num_classes)
-
-        if config.model_vision_checkpoint is not None:
+        
+        if not (config.model_vision_checkpoint is None or config.model_vision_checkpoint == 'None'):
             logging.info(f'Read vision model from {config.model_vision_checkpoint}.')
             self.load(config.model_vision_checkpoint)
 
