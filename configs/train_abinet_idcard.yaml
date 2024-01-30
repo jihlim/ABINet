@@ -1,0 +1,68 @@
+global:
+  name: train-abinet
+  phase: train
+  stage: train-super
+  workdir: workdir
+  seed: ~
+ 
+dataset:
+  train: {
+    roots: ['/purestorage/project/jihlim/ocr/ABINet/data/lmdb', 
+            ],
+    batch_size: 864 #384
+  }
+  test: {
+    roots: ['/purestorage/project/jihlim/ocr/ABINet/data/idcard_val'],
+    batch_size: 864 #384
+  }
+  charset_path: /purestorage/project/jihlim/ocr/ABINet/data/cubox_korean_english_indexed_dict.txt
+  num_workers: 14
+  data_aug: True
+  multiscales: False
+  max_length: 55
+
+
+training:
+  epochs: 500
+  show_iters: 500
+  eval_iters: 3000
+  save_iters: 3000
+
+optimizer:
+  type: Adam
+  true_wd: False
+  wd: 0.0
+  bn_wd: False
+  clip_grad: 20
+  lr: 0.0001
+  args: {
+    betas: !!python/tuple [0.9, 0.999], # for default Adam 
+  }
+  clip_grad: 20  
+  scheduler: {
+    periods: [300, 200],
+    gamma: 0.1,
+  }
+
+model:
+  name: 'modules.model_abinet_iter.ABINetIterModel'
+  iter_size: 3
+  ensemble: ''
+  use_vision: False
+  vision: {
+    checkpoint: None,
+    loss_weight: 1.,
+    attention: 'position',
+    backbone: 'transformer',
+    backbone_ln: 3,
+  }
+  language: {
+    checkpoint: None,
+    num_layers: 4,
+    loss_weight: 1.,
+    detach: True,
+    use_self_attn: False
+  }
+  alignment: {
+    loss_weight: 1.,
+  }
